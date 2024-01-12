@@ -14,7 +14,7 @@ exports.header = ({ amount, ccp, key, count, month, year }) => {
 exports.line = ({ name, ccp, amount }) => {
     console.log('name=',name)
     let initial = prefix + formatCCP(ccp) + formatAmount(amount) + formatName(name)
-    return String(initial).padEnd(61, " ") + "1\n"
+    return String(initial).padEnd(61, " ") + "1"
 }
 
 
@@ -28,6 +28,7 @@ const formatName = (fullName) => {
 const formatCCP = (str) => {
     const delimiterRegex = /[\/\\:\s-]+/;
 let array=String(str).split(delimiterRegex)
+
 ccp=array[0];
 key=array[1]
 
