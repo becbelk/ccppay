@@ -1,27 +1,22 @@
 const fs = require('fs/promises');
-const format=require('./line_formatter');
-const ds=require('./mock')
+const format = require('./line_formatter');
+const ds = require('./mock')
 const { Buffer } = require('node:buffer');
 
-const source = ds.dataSource;
 
+exports. writeFile =async ({path,buffer})=> {
+    console.log('buffer=====',buffer)
+    let data = [];
+    data.push(format.header(ds.payer));
+    buffer.map((person) => {  data.push(format.line(person)) })
+    console.log(data)
+    fs.appendFile(path,data,'utf-8')
+}
 const createFile = async (filePath) => {
-    // try {
-    //     await fs.open(filePath, "r");
-    //     console.log("[*]: Error while creating the file ", filePath, ", file is already exist!")
 
-    // } catch (error) {
-    //     //عدم حدوث أي شيء فقط التحقق من عدم وجود الملف سابقا
-    // }
-    // await fs.await(filePath, "w");
-    // console.log(`[*]: ${filePath} is succefully created`);
-
- 
-//     let buffer = new Buffer.from(source.map((person)=>{return format.line(person)}),'utf-8')
-
-//  console.log(buffer.toString())
+    source.map((person) => { return format.line(person) })
 
 
 
- console.log(source.map((person)=>{return format.line(person)}))
+
 }

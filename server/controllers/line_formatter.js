@@ -1,20 +1,17 @@
 const prefix = '*00000000';
 
-exports.header = ({ amount, ccp, key, count, month, year }) => {
+exports.header = (payer) => {
     const suffix = "              0";
-
-    return prefix + formatCCP(ccp, key)
-
-        + formatAmount(amount) + formatCount(count) + formatDate(month, year)
-
+//console.log(payer)
+    return prefix + formatCCP(payer.ccp)
+        + formatAmount(payer.amount) + formatCount(payer.count) + formatDate(payer.month, payer.year)
         + suffix
 }
 
 
 exports.line = ({ name, ccp, amount }) => {
-    console.log('name=',name)
     let initial = prefix + formatCCP(ccp) + formatAmount(amount) + formatName(name)
-    return String(initial).padEnd(61, " ") + "1"
+    return "\n"+String(initial).padEnd(61, " ") + "1";
 }
 
 
