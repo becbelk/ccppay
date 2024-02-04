@@ -1,8 +1,27 @@
-<h1>Hi everyOne</h1>
+<form action="/verify" method="POST">
+        <div class="row">
+        <div class=" m-2 col-1">
+                <label class="row m-2" for="header">ترويسة العملية</label>
+                <label class="row m-2" for="header">قائمة المستفيدين</label>
+        </div>
+        <div class=" m-2 col-8">
+                <input class="row m-2" cols="80" type="text" name="header">
 
-<div>
-    <form action="/generate" method="POST">
-        <input type="text" name="list" value="">
-        <input type="submit" value="submit">
-    </form>
+                <textarea class="row m-2 p-3 border-danger rounded-sm" name="list" cols="80" rows="7"></textarea>
+        </div>
 </div>
+<div class="row">
+        <div class="col-1"></div>
+        <div class="col-9 m-2">
+                <input type="submit" class="col-2 m-5 btn btn-info" id="verify"  value="تحقق">
+        </div>
+        <% if(isEmpty) {%>
+        <div>
+                <h1>
+                        الرجاء إدخال بيانات 
+                </h1>
+        </div>
+<% } %>
+<a href="/display">عرض العمليات السابقة</a>
+</div>
+</form>

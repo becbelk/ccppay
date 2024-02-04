@@ -2,9 +2,10 @@ const prefix = '*00000000';
 
 exports.header = (payer) => {
     const suffix = "              0";
+    date=payer.date.split('/');
 //console.log(payer)
     return prefix + formatCCP(payer.ccp)
-        + formatAmount(payer.amount) + formatCount(payer.count) + formatDate(payer.month, payer.year)
+        + formatAmount(payer.totalAmount) + formatCount(payer.personCount) + formatDate(date[0], date[1])
         + suffix
 }
 

@@ -1,27 +1,37 @@
 const express = require('express');
-const format = require('../controllers/line_formatter');
-const file = require('../controllers/file_generator');
-const ds = require('../controllers/mock');
-const parse=require('../controllers/input-parser')
-const source = ds.dataSource;
+
 const router = express.Router();
 
+const generate = require('../controllers/generator')
+const verify = require('../controllers/verifier')
+const display = require('../controllers/displayer')
+const title = 'تضامن رمضان'
 
-
-router.get('/', (req, res) => {
-   file.writeFile();
-    res.render('index');
-
+router.get('/', async (req, res) => {
+    try {
+        res.render('index', { title, isEmpty:false });
+    } catch (error) {
+        res.status().send({ "Sorry! ...": error });
+    }
+})
+router.get('/home', async (req, res) => {
+    try {
+        res.redirect('/')
+    } catch (error) {
+        res.status().send({ "Sorry! ...": error });
+    }
+})
+router.get('/about', async (req, res) => {
+    try {
+        res.render('about',{title:"about"})
+    } catch (error) {
+        res.status().send({ "Sorry! ...": error });
+    }
 })
 
+router.post('/verify', verify.fromClipBoard)
 
-router.post('/generate',async (req, res) => {
-    const clientClipBOard=req.body.list
- //console.log('req.body.list=',req.body.list)
-let buffer=parse.fromClipBoard(clientClipBOard);
-console.log('buffer=',buffer)
-file.writeFile({path:'./text.txt',buffer:buffer})
-console.log('fromClipBoard=',buffer)
-     res.render('index');
- })
+router.get('/generate', generate.textFile)
+router.get('/display', display.fromSaved)
+
 module.exports = router;
