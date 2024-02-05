@@ -1,19 +1,23 @@
 <form action="/verify" method="POST">
         <div class="row">
         <div class=" m-2 col-1">
-                <label class="row m-2" for="header">ترويسة العملية</label>
-                <label class="row m-2" for="header">قائمة المستفيدين</label>
+                <label class="row " for="header">ترويسة العملية</label>
+                <label class="row " for="header">قائمة المستفيدين</label>
         </div>
-        <div class=" m-2 col-8">
-                <input class="row m-2" cols="80" type="text" name="header">
+        <div class=" m-2 col-5">
+                <input class="row " cols="80" type="text" name="header" placeholder="[ccp de l'APC][montant total][nbr des benificiaires][mois/année]">
 
-                <textarea class="row m-2 p-3 border-danger rounded-sm" name="list" cols="80" rows="7"></textarea>
+                <textarea class="row p-3 border-danger rounded-sm" name="list" cols="80" rows="7" placeholder="[nom en latin][ccp][montant]..."></textarea>
+        </div>
+        <div class=" m-1 col-5">
+                <label class="row " for="header"></label>
+                <label class="row " for="header"></label>
         </div>
 </div>
 <div class="row">
         <div class="col-1"></div>
         <div class="col-9 m-2">
-                <input type="submit" class="col-2 m-5 btn btn-info" id="verify"  value="تحقق">
+                <input type="submit" class="col-2 m-5 btn btn-info" id="verify"  value="تخزين">
         </div>
         <% if(isEmpty) {%>
         <div>
