@@ -3,9 +3,10 @@ const title = 'تضامن رمضان'
 
 exports.fromSaved=async (req, res) => {
     try {
-        const order = await Pay.find({})
-        res.render('saved', { title, order });
+        const ordre = await Pay.find({})
+        res.render('saved-operations', { title, ordre });
     } catch (error) {
         console.log(error)
     }
 }
+

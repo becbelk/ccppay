@@ -1,28 +1,48 @@
 const Pay = require('../model/pay');
 const fs = require('fs');
-const format = require('./line_formatter');
-//const { Buffer } = require('node:buffer');
+const format = require('./formatter');
+const { getFileName } = require('../misc')
 
-exports.textFile = async (req, res) => {
-    console.log('generate file to download')
-    Pay.findById({ _id: req.query.id })
+
+
+exports.textFile = (req, res) => {
+    console.log('[textFIle] to generate file text that contain results')
+    //  console.log(req.body)
+    console.log('generate file to download');;
+
+    getOrdre(req)
         .then(
-            order => {
-             return   order.persons.reduce((stack,currentPerson) =>  [...stack,...format.line(currentPerson)] ,
-                [format.header(order.header)]); 
-        })
+            ordre => {
+                console.log('ordre---->')
+                return ordre.persons.reduce((stack, currentPerson) => [...stack, ...format.line(currentPerson)],
+                    [format.header(ordre.header)]);
+            })
         .then(data => {
+            console.log('data--->')
             return text = data.reduce((p, c) => { return p + c }, '');
         })
         .then(text => {
-            let file = fs.writeFile("outputs/order.txt", text,
-                err => {
-                    if (err) { console.log(err); }
-                    else { console.log("File written successfully\n"); }
-                });
+            console.log('text--->')
 
-            let stream = fs.createReadStream("outputs/order.txt", 'utf8');
-            stream.pipe(res)
+           getFileName().then(fileName => {
+                console.log('fileName-->', fileName)
+                fs.writeFile(fileName, text,
+                    err => {
+                        if (err) { console.log(err); }
+                        else { console.log("File written successfully\n"); }
+                    });
+                //    let stream = fs.createReadStream(fileName, 'utf8'); 
+                //stream.pipe(res)
+            })
+
         })
-    //.then(res.download("outputs/order.txt"))
+}
+const getOrdre = async (req) => {
+    try {
+        //   console.log('req=====',req.body)
+        return req.body;
+
+    } catch (err) {
+        return err
+    }
 }

@@ -1,7 +1,7 @@
 <div class="row m-5">
     <div class="col-1"></div>
     <div class=" col-5">
-        <table>
+        <table id="table1">
             <tr class="bg-danger">
                 <th class="col-1">
                     العدد
@@ -15,44 +15,44 @@
                     المبلغ الكلي </th>
             </tr>
             <tr class="bg-secondary">
-                <td>
-                    <%= reportHeader.personCount %>
+                <td id="personCount">
+                    <%= header.personCount %>
                 </td>
-                <td>
-                    <%= reportHeader.ccp %>
+                <td id="ccpAPC">
+                    <%= header.ccp %>
                 </td>
-                <td>
-                    <%= reportHeader.date%>
+                <td id="date">
+                    <%= header.date%>
                 </td>
-                <td>
-                    <%= reportHeader.totalAmount %>
+                <td  id="totalAmount">
+                    <%= header.totalAmount %>
                 </td>
             </tr>
         </table>
         <div class="row"></div>
-        <table>
+        <table id="table2">
             <thead>
                 <tr class="bg-success">
                     <th scope="col" class="col-1">No </th>
-                    <th scope="col" class="col-3">Nom </th>
-                    <th scope="col" class="col-2">CCP</th>
-                    <th scope="col" class="col-2">Montant </th>
+                    <th scope="col" class="col-3" >Nom </th>
+                    <th scope="col" class="col-2" >CCP</th>
+                    <th scope="col" class="col-2" >Montant </th>
                 </tr>
             </thead>
             <tbody>
 
-                <% reportList.forEach((element,index)=> { %>
+                <% persons.forEach((element,index)=> { %>
                     <tr>
                         <td>
                             <%= index+1 %>
                         </td>
-                        <td>
+                        <td name="name">
                             <%= element.name %>
                         </td>
-                        <td>
+                        <td name="ccp">
                             <%= element.ccp %>
                         </td>
-                        <td>
+                        <td name="amount">
                             <%= element.amount %>
                         </td>
                     </tr>
@@ -64,6 +64,10 @@
         </table>
     </div>
     <div class="col-3">
-        <a href="/generate/?id=<%= id %>" class="btn btn-outline-info">تحميل</a>
+        <form action="/generate" method="POST"></form>
+        <input type="submit"  class="btn btn-outline-info" onclick="saveClick()"  value="توليــــد">
+    </div>
+    <div class="col-2">
+        <a href="/download" id="download" style="display: none;" >تحميل</a>
     </div>
 </div>

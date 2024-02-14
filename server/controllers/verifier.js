@@ -1,52 +1,56 @@
-const build = require('../controllers/builder');
+const parse = require('./parser');
 const Pay = require('../model/pay');
 const title = 'تضامن رمضان'
-exports.fromClipBoard = async (req, res) => {
+exports.buildOrdre = async (req, res) => {
     try {
+        ordre = await parse.list(req.body.list);
+       // console.log('datas good', ordre)
 
-        let ordre = getClipBoard(req)
-        //console.log('op=',op)
         if (!isObjectEmpty(ordre.header) && !isObjectEmpty(ordre.persons)) {
-            //    console.log('op!={ header: {}, persons: [] }')
-            let operations = await Pay.find({
-                'header.totalAmount': Number(ordre.header.totalAmount),
-                'header.personCount': ordre.header.personCount,
-                'header.date': ordre.header.date
-            })
-
-            if (operations.length==0) {
-                console.log('[fromClipBoard] : Element(', ordre.header.totalAmount, ',', ordre.header.personCount, ',', ordre.header.date, ') not fond create one instead')
-                if (orderIsCorrect(ordre.header, ordre.persons)) {
-                    let insert = await Pay.insertMany([ordre]);
-                    operations = await Pay.find({
-                        'header.totalAmount': Number(ordre.header.totalAmount),
-                        'header.personCount': ordre.header.personCount,
-                        'header.date': ordre.header.date
-                    });
-                    res.render('verify', { reportHeader: ordre.header, reportList: ordre.persons, title, id: operations[0]._id });
-                }
-            } else {
-                operations = await Pay.find({});//todo id of gotten op
-                res.render('saved', { title, operations })
-            }
-        } else {
-            res.render('index', { title, isEmpty: true })
-
+            res.render('show-to-verify', { header: ordre.header, persons: ordre.persons, title: "تحقق: عملية غير مخزنة" });
         }
 
-
     } catch (error) {
-        console.log(error)//todo render page
+     //   console.log(error)
     }
+
+
 }
-const getClipBoard = (req) => {
-    let header = build.header(req.body.header);
-    let persons = build.list(req.body.list)
-    if (header != {} && persons != []) {
-        { return { header, persons } }
-    } else { return {} }
-}
-const orderIsCorrect = (header, list) => {
+
+
+
+
+
+
+
+// console.log('datas good')
+// let operations = Pay.find({
+//     'header.totalAmount': Number(ordre.header.totalAmount),
+//     'header.personCount': ordre.header.personCount,
+//     'header.date': ordre.header.date
+// })
+// console.log('operations.length=', operations.length)
+// if (operations.length == 0) {
+// console.log('ordre=', ordre)
+// console.log('[verifier.buildOrdre] : Element(', ordre.header.totalAmount, ',', ordre.header.personCount, ',', ordre.header.date, ') not found, prepare to create one')
+// if (ordreIsCorrect(ordre.header, ordre.persons)) {
+//   let insert = await Pay.insertMany([ordre]);
+//             }
+//         } else {
+//             res.render('saved-operations', { title: "بيانات مسجلة مسبقا", operations })
+//         }
+//     } else {
+//         res.render('index', { title, isEmpty: true })
+
+//    }
+//  }).catch((error) => {
+//     console.log('[verifier.buildOrdre] ', error)//todo render page
+//     res.status(404).send(error)
+// })
+
+
+
+const ordreIsCorrect = (header, list) => {
     let sum = list.reduce((acc, person) => { return Number(person.amount) + acc; }, 0);
     if (Number(sum - header.totalAmount).toFixed(2) == '0.00') {//todo sometimes error here
         return (list.length == Number(header.personCount))

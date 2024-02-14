@@ -1,37 +1,25 @@
 const express = require('express');
-
+const context= require('../controllers/context/context');
+const home= require('../controllers/home');
+const about= require('../controllers/about');
+const download= require('../controllers/download');
+const {config}= require('../controllers/context/context-configurator');
 const router = express.Router();
 
 const generate = require('../controllers/generator')
 const verify = require('../controllers/verifier')
 const display = require('../controllers/displayer')
-const title = 'تضامن رمضان'
 
-router.get('/', async (req, res) => {
-    try {
-        res.render('index', { title, isEmpty:false });
-    } catch (error) {
-        res.status().send({ "Sorry! ...": error });
-    }
-})
-router.get('/home', async (req, res) => {
-    try {
-        res.redirect('/')
-    } catch (error) {
-        res.status().send({ "Sorry! ...": error });
-    }
-})
-router.get('/about', async (req, res) => {
-    try {
-        res.render('about',{title:"about"})
-    } catch (error) {
-        res.status().send({ "Sorry! ...": error });
-    }
-})
+router.get('/',config,home.home )
+router.get('/home', config,home.display)
 
-router.post('/verify', verify.fromClipBoard)
+router.post('/configure',context.config)
+router.get('/about', about.display)
 
-router.get('/generate', generate.textFile)
-router.get('/display', display.fromSaved)
+router.post('/verify',config, verify.buildOrdre)
+//router.get('/generate',config, generate.textFile)
+router.post('/generate',config, generate.textFile)
+router.get('/display',config, display.fromSaved)
+router.get('/download',config, download.textFile)
 
 module.exports = router;

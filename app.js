@@ -8,6 +8,7 @@ const router = require('./server/router/main');
 
 const app = express()
 const port= process.env.PORT||3030;
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
 app.use(expressLayouts);
