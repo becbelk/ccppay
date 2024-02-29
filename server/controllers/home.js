@@ -1,13 +1,5 @@
 const title = 'تضامن رمضان'
 
-exports.display=async (req, res) => {
-    try {
-        res.redirect('/')
-    } catch (error) {
-        res.status().send({ "Sorry! ...": error });
-    }
-}
-
 
 exports.home=async (req, res) => {
     try {

@@ -25,11 +25,6 @@ const saveClick = () => {
  
 }
 
-
-
-
-
-
 const parseHeader = function (table) {
     let ccp = table.querySelector('#ccpAPC').innerText.trim();
     let totalAmount = table.querySelector('#totalAmount').innerText.trim();
@@ -37,8 +32,6 @@ const parseHeader = function (table) {
     let personCount = table.querySelector('#personCount').innerText.trim();
     return { "ccp": ccp, "totalAmount": totalAmount, "date": date, "personCount": personCount }
 }
-
-
 const parseData = function () {
     let pers = [];
     let ccps = document.getElementsByName("ccp");

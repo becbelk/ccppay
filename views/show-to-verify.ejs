@@ -1,73 +1,78 @@
 <div class="row m-5">
-    <div class="col-1"></div>
-    <div class=" col-5">
-        <table id="table1">
-            <tr class="bg-danger">
-                <th class="col-1">
-                    العدد
-                </th>
-                <th class="col-2">
-                    حساب المؤسسة
-                </th>
-                <th class="col-1">
-                    تاريخ العملية </th>
-                <th class="col-2">
-                    المبلغ الكلي </th>
-            </tr>
-            <tr class="bg-secondary">
-                <td id="personCount">
-                    <%= header.personCount %>
-                </td>
-                <td id="ccpAPC">
-                    <%= header.ccp %>
-                </td>
-                <td id="date">
-                    <%= header.date%>
-                </td>
-                <td  id="totalAmount">
-                    <%= header.totalAmount %>
-                </td>
-            </tr>
-        </table>
-        <div class="row"></div>
-        <table id="table2">
-            <thead>
-                <tr class="bg-success">
-                    <th scope="col" class="col-1">No </th>
-                    <th scope="col" class="col-3" >Nom </th>
-                    <th scope="col" class="col-2" >CCP</th>
-                    <th scope="col" class="col-2" >Montant </th>
-                </tr>
-            </thead>
-            <tbody>
-
-                <% persons.forEach((element,index)=> { %>
-                    <tr>
-                        <td>
-                            <%= index+1 %>
-                        </td>
-                        <td name="name">
-                            <%= element.name %>
-                        </td>
-                        <td name="ccp">
-                            <%= element.ccp %>
-                        </td>
-                        <td name="amount">
-                            <%= element.amount %>
-                        </td>
-                    </tr>
-
-
-                    <% }) %>
-
-            </tbody>
-        </table>
-    </div>
-    <div class="col-3">
+    <div class="mx-5 col-5">
+ 
         <form action="/generate" method="POST"></form>
-        <input type="submit"  class="btn btn-outline-info" onclick="saveClick()"  value="توليــــد">
+        <input type="submit" class="btn btn-outline-info" onclick="saveClick()" value="توليــــد">
     </div>
     <div class="col-2">
-        <a href="/download" id="download" style="display: none;" >تحميل</a>
+        <a href="/download" id="download" style="display: none;">تحميل الملف
+            <img src="/img/save-32.png" alt="save" width="40" height="40">
+        </a>
     </div>
+</div>
+
+<div class="mx-3 col-7">
+    <table class="table table-striped table-info" id="table1">
+        <tr class="bg-primary">
+            <th class="col-2">
+                العدد
+            </th>
+            <th class="col-3">
+                حساب المؤسسة
+            </th>
+            <th class="col-2">
+                تاريخ العملية </th>
+            <th class="col-3">
+                المبلغ الكلي </th>
+        </tr>
+        <tr class="bg-light">
+            <td id="personCount">
+                <%= header.personCount %>
+            </td>
+            <td id="ccpAPC">
+                <%= header.ccp %>
+            </td>
+            <td id="date">
+                <%= header.date%>
+            </td>
+            <td id="totalAmount">
+                <%= header.totalAmount %>
+            </td>
+        </tr>
+    </table>
+    <div class="row"></div>
+    <table class="table table-striped table-dark" id="table2">
+        <thead>
+            <tr class="bg-info">
+                <th scope="col" class="col-1">الرقم </th>
+                <th scope="col" class="col-3">الاسم باللاتينية </th>
+                <th scope="col" class="col-2">ح ج ب</th>
+                <th scope="col" class="col-2">المبلغ </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <% persons.forEach((element,index)=> { %>
+                <tr>
+                    <td>
+                        <%= index+1 %>
+                    </td>
+                    <td name="name">
+                        <%= element.name %>
+                    </td>
+                    <td name="ccp">
+                        <%= element.ccp %>
+                    </td>
+                    <td name="amount">
+                        <%= element.amount %>
+                    </td>
+                </tr>
+
+
+                <% }) %>
+
+        </tbody>
+    </table>
+</div>
+
 </div>

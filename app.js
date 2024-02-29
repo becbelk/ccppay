@@ -4,17 +4,21 @@ const expressLayouts = require('express-ejs-layouts');
 const connectDB = require('./server/config');
 const mongoStore= require('connect-mongo');
 const router = require('./server/router/main');
+const cookieParseer=require('cookie-parser')
 
 
 const app = express()
+
 const port= process.env.PORT||3030;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
 app.use(expressLayouts);
+app.use(cookieParseer());
 app.set('layout','./layouts/main.ejs');
 app.set('view engine', 'ejs');
 connectDB();
+
 app.use(expressLayouts);
 app.use('/',router)
 app.use('*',(req,res)=>{

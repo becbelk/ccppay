@@ -1,4 +1,4 @@
-const Context = require('../model/global');
+//const User = require('../model/user');
 const {getFileName}= require('../misc')
 exports.textFile = (req, res) => {
     try {

@@ -1,5 +1,5 @@
 
-const Context = require('../model/global');
+const User = require('../model/user');
 const lineregex = /([a-zÀ-ÿ]+[\s]+)+[\d]{5,10}[/ -:#][\d]{2}[\s]+[\d]+(.)[\d]{0,2}/gi;
 const nameRegEx = /([a-zÀ-ÿ]+[\s]+)+/i;
 const ccpRegEX = /[\d]{5,10}[/ -:#][\d]{2}/;
@@ -18,8 +18,9 @@ exports.list = async (input) => {
 }
 
 
-const buildOrdre = async (persons) => {
+const buildOrdre = async (persons,username) => {
     try {
+        console.log('[buildOrdre]')
         let totalAmount = persons.reduce(
             (acc, curr) => Number(acc) + Number(curr.amount), 0);
         let personCount = persons.length;
@@ -27,7 +28,7 @@ const buildOrdre = async (persons) => {
         let mm = String(d.getMonth() + 1).padStart(2, '0');
         let yyyy = d.getFullYear();
         let date = mm + '/' + yyyy;
-        let context = await Context.find({})
+        let user = await User.find({username:username})
         console.log({ personCount: personCount, totalAmount: totalAmount, ccp: context[0].ccp, date: date })
         console.log('[buildHeader] result: date=', date, ', totalAmount= ', totalAmount, ', personCount= ', personCount, ', ccp=', context[0].ccp);
         return {
