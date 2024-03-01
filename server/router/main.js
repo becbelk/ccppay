@@ -23,14 +23,14 @@ router.get('/register', admin.register,)
 router.post('/register', admin.createUser)
 
 
-router.get('/configure',config)
-router.get('/about', about.display)
+//router.get('/configure',config)
+router.get('/about', authenticate,about.display)
 
-router.post('/verify',config, verify.buildOrdre)
+router.post('/verify',authenticate, verify.buildOrdre)
 //router.get('/generate',config, generate.textFile)
-router.post('/generate',config, generate.textFile)
-router.get('/display',config, display.fromSaved)
-router.get('/download',config, download.textFile)
+router.post('/generate',authenticate, generate.textFile)
+router.get('/display',authenticate, display.fromSaved)
+router.get('/download',authenticate, download.textFile)
 router.get('/register-success', admin.success)
 router.get('/register-failure', admin.failure)
 

@@ -1,9 +1,13 @@
 const parse = require('./parser');
 const Pay = require('../model/pay');
+const jwt=require('jsonwebtoken');
 const title = 'تضامن رمضان'
 exports.buildOrdre = async (req, res) => {
     try {
-        ordre = await parse.list(req.body.list);
+
+        let token = req.cookies.token;
+        let decoded=jwt.verify(token,process.env.JWT_SECRET)
+        ordre = await parse.list(req.body.list,decoded.userId);
        // console.log('datas good', ordre)
 
         if (!isObjectEmpty(ordre.header) && !isObjectEmpty(ordre.persons)) {

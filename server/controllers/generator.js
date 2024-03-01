@@ -1,5 +1,6 @@
-const Pay = require('../model/pay');
+//const Pay = require('../model/pay');
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
 const format = require('./formatter');
 const { getFileName } = require('../misc')
 
@@ -9,6 +10,9 @@ exports.textFile = (req, res) => {
     console.log('[textFIle] to generate file text that contain results')
     //  console.log(req.body)
     console.log('generate file to download');;
+    const token = req.cookies.token;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+   // req.userId = decoded.userId;
 
     getOrdre(req)
         .then(
@@ -18,13 +22,12 @@ exports.textFile = (req, res) => {
                     [format.header(ordre.header)]);
             })
         .then(data => {
-            console.log('data--->')
+            console.log('data--->',data)
             return text = data.reduce((p, c) => { return p + c }, '');
         })
         .then(text => {
-            console.log('text--->')
-
-           getFileName().then(fileName => {
+         //   console.log('text--->',text);
+            getFileName(decoded.userId).then(fileName => {
                 console.log('fileName-->', fileName)
                 fs.writeFile(fileName, text,
                     err => {

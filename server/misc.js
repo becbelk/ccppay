@@ -6,12 +6,14 @@ exports.ccpCoherent=(ccp)=>{
     return true;
 }
 
-exports.getFileName = async (username) => {
-    try {//todo: find('***)
-        let user = await User.findOne({username:username});
-        let code = user[0].codeCompany;
+exports.getFileName = async (id) => {
+    try {
+        let user = await User.findById(id);
+        //console.log('user=',user)
+        let code = user.codeCompany;
+        console.log('code====>',code)
         return './outputs/ordre_de_virrement_' + code + '.txt';
     } catch (error) {
-
+console.log('error',error)
     }
 }
