@@ -11,7 +11,8 @@ exports.authenticate=async (req, res, next ) => {
       console.log('[authenticate]',token)
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       console.log('[authenticate] : json verified....')
-      req.userId = decoded.userId;
+      //req.userId = decoded.userId;
+      res.locals.userId=decoded.userId;
       next();
     } catch(error) {
       res.status(401).json( { "message": "Unauthorized"} );

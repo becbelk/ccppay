@@ -10,10 +10,7 @@ exports.textFile = (req, res) => {
     console.log('[textFIle] to generate file text that contain results')
     //  console.log(req.body)
     console.log('generate file to download');;
-    const token = req.cookies.token;
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-   // req.userId = decoded.userId;
-
+ 
     getOrdre(req)
         .then(
             ordre => {
@@ -27,7 +24,7 @@ exports.textFile = (req, res) => {
         })
         .then(text => {
          //   console.log('text--->',text);
-            getFileName(decoded.userId).then(fileName => {
+            getFileName(res.locals.userId).then(fileName => {
                 console.log('fileName-->', fileName)
                 fs.writeFile(fileName, text,
                     err => {
